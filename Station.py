@@ -41,7 +41,7 @@ class Station:
                         ajout_velo+=1
                     else:
                         break
-                return f"{ajout_velo} vélos ont ete ajoutés sur {argument}"
+                return f"{ajout_velo} vélos ont été ajoutés sur {argument}"
 
     def retirer_velo(self):
         velo_retire = None
