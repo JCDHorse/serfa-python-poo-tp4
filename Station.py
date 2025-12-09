@@ -1,5 +1,5 @@
 from random import randint
-import Velo
+from classVelo import Velo
 
 
 class Station:
@@ -30,8 +30,20 @@ class Station:
                     self.__velos.append(Velo())
                 return f"{argument} velos ont ete ajoutes"
 
-    def retirer_velo(self,velo):
-        self.__velos.remove(velo)
+    def retirer_velo(self):
+        velo_retire = None
+        for velo in self.__velos:
+            if velo.get_etat() == "disponible":
+                velo_retire =velo
+                break
+
+        if velo_retire:
+            self.__velos.remove(velo_retire)
+            print(f"le velo {velo_retire.get_id} a ete enlever")
+            return velo_retire
+        else:
+            print("aucun velo n'est disponible")
+            return None
 
     def afficher_info(self):
         return (f"Voici la station : {self.__nom}\n"
