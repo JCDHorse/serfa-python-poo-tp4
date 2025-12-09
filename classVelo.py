@@ -28,25 +28,31 @@ class Velo:
     if self.__etat == "disponible":
       self.__etat = "en_location"
       self.__indice+=1
+      return True
     else:
-      return f"Etat du vélo : {self.__etat}"
+      return False
 
   def retourner(self):
     if self.__etat == "en_location":
       self.__etat = "disponible"
+      return True
     else:
-      return f"Etat du vélo : {self.__etat}"
+      return False
 
   def a_reparer(self):
     if self.__etat != "en_reparation":
       self.__etat = "en_reparation"
       self.__indice+=10
+      return True
+    else:
+      return False
   
   def terminer_reparation(self):
     if self.__etat == "en_reparation":
       self.__etat = "disponible"
+      return True
     else:
-      return f"Etat du vélo : {self.__etat}"
+      return False
 
   def __str__(self):
     return f"Velo(id={self.__id}, etat={self.__etat}, indice={self.__indice})"
