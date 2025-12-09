@@ -8,13 +8,11 @@ class ParcDeVelos:
         self.__en_reparations = []
 
     def trouve_velo(self, v_id: str) -> Velo | None:
-        velo: Velo | None = None
-        for station in self.__stations:
+        for station in self.__stations.values():
             for s_velo in station.velos:
                 if s_velo.get_id() == v_id:
-                    velo = s_velo
-                    break
-        return velo
+                    return s_velo
+        return None
 
     def calculer_tarif(self, loc_debut: int, loc_fin: int) -> int:
         price = 0
