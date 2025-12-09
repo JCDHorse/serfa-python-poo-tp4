@@ -27,8 +27,11 @@ class ParcDeVelos:
                 price += 2
         return price
 
-    def ajouter_station(self, name: str, address: str, capacity: int = 10):
+    def creer_station(self, name: str, address: str, capacity: int = 10):
         station = Station(name, address, capacity)
+        self._stations[station.id] = station
+
+    def ajouter_station(self, station: Station):
         self._stations[station.id] = station
 
     def louer_velo(self, s_id: str, loc_debut: int):
