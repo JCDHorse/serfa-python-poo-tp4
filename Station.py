@@ -41,7 +41,7 @@ class Station:
                         ajout_velo+=1
                     else:
                         break
-                return f"{ajout_velo} velos ont ete ajoutes sur {argument}"
+                return f"{ajout_velo} vélos ont ete ajoutés sur {argument}"
 
     def retirer_velo(self):
         velo_retire = None
@@ -52,17 +52,17 @@ class Station:
 
         if velo_retire:
             self.__velos.remove(velo_retire)
-            print(f"le velo {velo_retire.get_id()} a ete enlever")
+            print(f"le vélo {velo_retire.get_id()} a été retiré")
             return velo_retire
         else:
-            print("aucun velo n'est disponible")
+            print("aucun vélo n'est disponible")
             return None
 
     def afficher_info(self):
         return (f"Voici la station : {self.__nom}\n"
                 f"l'adresse : {self.__emplacement}\n"
-                f"la capacite : {self.__capacite}\n"
-                f"et le nombre de velo actuel : {len(self.__velos)}")
+                f"la capacité : {self.__capacite}\n"
+                f"et le nombre de vélo actuel : {len(self.__velos)}")
 
     @property
     def emplacement(self):
