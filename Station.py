@@ -23,11 +23,12 @@ class Station:
         if len(self.__velos) == self.__capacite:
             return "veuillez supprimer un velo car la station n'a plus de place."
         else:
-            if isinstance(argument, velo):
-                self.__velos.append(velo)
+            if isinstance(argument, Velo):
+                self.__velos.append(argument)
             elif isinstance(argument,int):
                 for i in range(argument):
                     self.__velos.append(Velo())
+                return f"{argument} velos ont ete ajoutes"
 
     def retirer_velo(self,velo):
         self.__velos.remove(velo)
