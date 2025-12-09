@@ -15,20 +15,33 @@ class Station:
     def generate_id(cls):
         while True:
             id = f"S{randint(3400, 4000)}X"
-            if id not in Station.__id_util:
-                Station.__id_util.append(id)
+            if id not in cls.__id_util:
+                cls.__id_util.append(id)
                 return id
 
     def ajouter_velo(self,argument):
+        # Si plus de capacité de stockage alors on return
         if len(self.__velos) == self.__capacite:
-            return "veuillez supprimer un velo car la station n'a plus de place."
+            return "station pleine : impossible d'ajouter un nouveau vélo."
+
         else:
+            # On ajoute un seul vélo
             if isinstance(argument, Velo):
-                self.__velos.append(argument)
+                if len(self.__velos) < self.__capacite:
+                    self.__velos.append(argument)
+                    return "1 vélo ajouté."
+                return "station pleine : impossible d'ajouter un nouveau vélo."
+            
+            # On ajoute plusieurs vélos
             elif isinstance(argument,int):
+                ajout_velo=0
                 for i in range(argument):
-                    self.__velos.append(Velo())
-                return f"{argument} velos ont ete ajoutes"
+                    if len(self.__velos) < self.__capacite:
+                        self.__velos.append(Velo())
+                        ajout_velo+=1
+                    else:
+                        break
+                return f"{ajout_velo} velos ont ete ajoutes sur {argument}"
 
     def retirer_velo(self):
         velo_retire = None
@@ -39,7 +52,7 @@ class Station:
 
         if velo_retire:
             self.__velos.remove(velo_retire)
-            print(f"le velo {velo_retire.get_id} a ete enlever")
+            print(f"le velo {velo_retire.get_id()} a ete enlever")
             return velo_retire
         else:
             print("aucun velo n'est disponible")
