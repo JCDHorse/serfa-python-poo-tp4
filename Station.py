@@ -66,3 +66,7 @@ class Station:
     @property
     def nom(self):
         return self.__nom
+
+    @property
+    def id(self):
+        return self.__id
