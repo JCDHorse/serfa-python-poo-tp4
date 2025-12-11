@@ -13,3 +13,5 @@ parc.ajouter_station(s_louvre)
 ok = parc.louer_velo(s_eiffel.id, 7)
 if ok:
     print("Vélo loué avec succès")
+
+print(parc.consulter_parc())

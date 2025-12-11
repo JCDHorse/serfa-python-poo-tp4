@@ -2,11 +2,13 @@ from Station import Station
 from classVelo import Velo
 
 class ParcDeVelos:
+    # __en_locations: liste de dictionnaire { debut: hd, velo: V_XXX }
     def __init__(self):
         self.__stations = dict()
         self.__en_locations = []
         self.__en_reparations = []
 
+    # Peut être supprimée, pas besoin de trouver un vélo spécifique pour la location
     def trouve_velo(self, v_id: str) -> Velo | None:
         for station in self.__stations.values():
             for s_velo in station.velos:
@@ -14,6 +16,8 @@ class ParcDeVelos:
                     return s_velo
         return None
 
+    # Utiliser début/fin depuis le dictionnaire des locations
+    # Méthode de classe (appelée depuis retourner_velo)
     def calculer_tarif(self, loc_debut: int, loc_fin: int) -> int:
         price = 0
         if loc_fin < loc_debut:
@@ -25,6 +29,7 @@ class ParcDeVelos:
                 price += 2
         return price
 
+    # a supprimer, surinterpretation
     def creer_station(self, name: str, address: str, capacity: int = 10):
         station = Station(name, address, capacity)
         self.__stations[station.id] = station
@@ -32,6 +37,8 @@ class ParcDeVelos:
     def ajouter_station(self, station: Station):
         self.__stations[station.id] = station
 
+    # Prend une station ID et une heure, la station renvoie un velo au hasard
+    # Utiliser le dictionnaire des locations
     def louer_velo(self, s_id: str, loc_debut: int):
         velo = self.__stations[s_id].retirer_velo()
         if velo is None:
@@ -39,6 +46,8 @@ class ParcDeVelos:
         self.__en_locations.append(velo)
         return True
 
+    # Retire le velo des locations
+    # Utiliser calculer_tarif
     def retourner_velo(self, v_id: str, loc_fin: int) -> bool:
         velo = self.trouve_velo(v_id)
 
@@ -57,7 +66,6 @@ class ParcDeVelos:
 
         if velo is None:
             return False
-
         velo.a_reparer()
         self.__en_reparations.append(velo)
         return True
