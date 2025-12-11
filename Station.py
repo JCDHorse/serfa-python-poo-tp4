@@ -74,7 +74,10 @@ class Station:
     
     @property
     def velos(self):
-        return self.__velos
+        output_velo = ""
+        for i in range(len(self.__velos)):
+            output_velo += str(self.__velos[i]) + "\n"
+        return output_velo.strip()
 
     @property
     def nom(self):
@@ -84,4 +87,22 @@ class Station:
     def id(self):
         return self.__id
 
-
+if __name__ == '__main__':
+    velo1 = Velo()
+    velo2 = Velo()
+    station = Station("jenesaispas","10 rue des clochard",12)
+    print(station.ajouter_velo(velo1))
+    print("---------------------------------------------------------")
+    print(station.ajouter_velo(velo2))
+    print("---------------------------------------------------------")
+    print(station.velos)
+    print("---------------------------------------------------------")
+    print(station.ajouter_velo(5))
+    print("---------------------------------------------------------")
+    print(station.velos)
+    print("---------------------------------------------------------")
+    print(station.retirer_velo())
+    print("---------------------------------------------------------")
+    print(station.velos)
+    print("---------------------------------------------------------")
+    print(station.afficher_info())
