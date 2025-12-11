@@ -18,7 +18,7 @@ class ParcDeVelos:
         self.__en_locations.append(ticket)
         return True
 
-    def retourner_velo(self, s_id: str, loc_fin: int, v_id:str) -> bool:
+    def retourner_velo(self, s_id: str, loc_fin: int, v_id:str):
         ticket=None
         for t in self.__en_locations:
             if t["id"]==v_id:
@@ -75,5 +75,22 @@ class ParcDeVelos:
     def consulter_parc(self):
         infos = ""
         for station in self.__stations:
-            infos += station.afficher_info()
+            if isinstance(station, Station):
+                infos += station.afficher_info()
         return infos
+
+
+if __name__ == '__main__':
+    velo1 = Velo()
+    velo2 = Velo()
+    station = Station("jenesaispas", "10 rue des clochard", 12)
+    print(station.ajouter_velo(velo1))
+    print("---------------------------------------------------------")
+    print(station.ajouter_velo(velo2))
+    print("---------------------------------------------------------")
+    parc = ParcDeVelos()
+    parc.ajouter_station(station)
+    parc.louer_velo(str(station.id),8)
+    parc.consulter_parc()
+    velo_id_demade = input("veuillez rentrer votre id, exemple V_1000 : ")
+    print(f"le prix que vous devez payer est de : {parc.retourner_velo(str(station.id),17,str(velo_id_demade))}")
