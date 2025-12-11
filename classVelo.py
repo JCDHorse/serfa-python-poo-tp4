@@ -11,11 +11,17 @@ class Velo:
   def get_id(self):
     return self.__id
   
+  id=property(fget=get_id)
+
   def get_etat(self):
     return self.__etat
   
+  etat=property(fget=get_etat)
+  
   def get_indice(self):
     return self.__indice
+
+  indice=property(fget=get_indice)
 
   def random_id(self):
     while True:
