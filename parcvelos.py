@@ -19,19 +19,19 @@ class ParcDeVelos:
         return True
 
     def retourner_velo(self, s_id: str, loc_fin: int, v_id:str) -> bool:
-        facture=None
-        for ticket in self.__en_locations:
-            if ticket["id"]==v_id:
-                facture = ticket
+        ticket=None
+        for t in self.__en_locations:
+            if t["id"]==v_id:
+                ticket = t
                 break
             
-        if facture is None:
+        if ticket is None:
             return False
 
-        velo_retour=facture["velo"]
-        loc_deb=facture["debut"]
+        velo_retour=ticket["velo"]
+        loc_deb=ticket["debut"]
 
-        self.__en_locations.remove(facture)
+        self.__en_locations.remove(ticket)
         velo_retour.retourner()
 
         self.ajouter_new_velos(s_id, velo_retour)
