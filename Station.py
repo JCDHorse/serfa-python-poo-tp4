@@ -43,20 +43,28 @@ class Station:
                         break
                 return f"{ajout_velo} vélos ont été ajoutés sur {argument}"
 
-    def retirer_velo(self):
+    def retirer_velo(self, v_id=None):
         velo_retire = None
+
         for velo in self.__velos:
-            if velo.get_etat() == "disponible":
-                velo_retire =velo
+            # Cas par défaut, sans id fourni
+            if v_id is None and velo.etat == "disponible":
+                velo_retire = velo
+                break
+
+            # Cas avec id fourni
+            if v_id is not None and velo.id == v_id and velo.etat == "disponible":
+                velo_retire = velo
                 break
 
         if velo_retire:
             self.__velos.remove(velo_retire)
-            print(f"le vélo {velo_retire.get_id()} a été retiré")
+            print(f"le vélo {velo_retire.id} a été retiré")
             return velo_retire
         else:
-            print("aucun vélo n'est disponible")
+            print("aucun vélo correspondant n'est disponible")
             return None
+
 
     def afficher_info(self):
         return (f"Voici la station : {self.__nom}\n"

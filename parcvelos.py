@@ -53,23 +53,38 @@ class ParcDeVelos:
                 price += 2
         return price
 
-    def envoyer_en_reparation(self, v_id: str) -> bool:
-        velo = self.trouve_velo(v_id)
+    def trouver_velo(self, s_id: str, v_id: str) -> Velo:
+        station = self.__stations.get(s_id)
+        if station is None:
+            return None
 
+        for velo in station.velos:
+            if velo.id == v_id:
+                return velo
+
+        return None
+
+    def envoyer_en_reparation(self, s_id: str, v_id: str) -> bool:
+        velo = self.trouver_velo(s_id, v_id)
+        
         if velo is None:
             return False
+        
+        self.__stations[s_id].retirer_velo(v_id)
+
         velo.a_reparer()
         self.__en_reparations.append(velo)
         return True
 
-    def reaffecter_velo_repare(self, v_id: str) -> bool:
-        velo = self.trouve_velo(v_id)
+    def reaffecter_velo_repare(self, s_id: str, v_id: str) -> bool:
+        velo = self.trouver_velo(s_id, v_id)
 
         if velo is None:
             return False
 
         velo.terminer_reparation()
         self.__en_reparations.remove(velo)
+        self.ajouter_new_velos(s_id, velo)
         return True
 
     def consulter_parc(self):
