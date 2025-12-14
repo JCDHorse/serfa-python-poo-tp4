@@ -97,6 +97,9 @@ class ParcDeVelos:
                 infos += s.afficher_info()
         return infos
 
+    def a_velos_reparation(self) -> bool:
+        return len(self.__en_reparations) != 0
+
     def consulter_velos_reparations(self):
         infos = "Vélos en réparation:\n"
         for v in self.__en_reparations:

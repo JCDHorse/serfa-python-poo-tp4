@@ -67,7 +67,9 @@ class Main:
 
     # 2.6
     def reaffecter_velo(self):
-        print(self.__parc.consulter_parc())
+        if not self.__parc.a_velos_reparation():
+            print("Pas de vélos actuellement en réparation")
+            return
         s_id = input("ID de la station: ").upper()
         print(self.__parc.consulter_velos_reparations())
         v_id = input("ID du vélo: ").upper()
