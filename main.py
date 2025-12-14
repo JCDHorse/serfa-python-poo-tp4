@@ -1,6 +1,78 @@
+import sys
+
+from ParcError import ParcError, StationError
 from parcvelos import ParcDeVelos
 from classVelo import Velo
 from Station import Station
+
+class Main:
+    def __init__(self, parc: ParcDeVelos | None = None):
+        if parc is None:
+            self.__parc = ParcDeVelos()
+        else:
+            self.__parc = parc
+
+    # 1.1
+    def usr_louer_velo(self):
+        print(self.__parc.consulter_parc())
+        s_id = input("ID de la station: ")
+        hd = int(input("Quelle heure est-il ?"))
+        ticket = self.__parc.louer_velo(s_id, hd)
+        print(f"Vélo {ticket["velo"].get_id()} a été loué a {hd}h a la station {s_id}")
+
+    # 1.2
+    def usr_retourner_velo(self):
+        print(self.__parc.consulter_parc())
+        v_id = input("ID du vélo: ")
+        s_id = input("ID de la station: ")
+        hf = int(input("Quelle heure est-il ?"))
+        tarif = self.__parc.retourner_velo(s_id, hf, v_id)
+        print(f"Vélo {v_id} a été retourné a {hf}h a la station {s_id}.")
+        print(f"Prix de la location : {tarif}€")
+
+
+    # 2.1
+    def consulter(self):
+        print(self.__parc.consulter_parc())
+
+    # 2.2
+    def ajout_station(self):
+        nom = input("Nom de la station: ")
+        adresse = input("Adresse de la station: ")
+        self.__parc.ajouter_station(Station(nom, adresse))
+
+    # 2.3
+    def ajout_velo(self):
+        print(self.__parc.consulter_parc())
+        s_id = input("ID de la station: ")
+        c = int(input("Nombre de vélos a ajouter a la station: "))
+        self.__parc.ajouter_new_velos(s_id, c)
+        print(f"{c} vélos ajoutés a {s_id}")
+
+    # 2.4
+    def retirer_velo(self):
+        print(self.__parc.consulter_parc())
+        s_id = input("ID de la station: ")
+        print(self.__parc.consulter_station(s_id))
+        v_id = input("ID du vélo: ")
+        self.__parc.retirer_velo(s_id, v_id)
+
+    # 2.5
+    def reparer_velo(self):
+        print(self.__parc.consulter_parc())
+        s_id = input("ID de la station: ")
+        print(self.__parc.consulter_station(s_id))
+        v_id = input("ID du vélo: ")
+        self.__parc.envoyer_en_reparation(s_id, v_id)
+
+    # 2.6
+    def reaffecter_velo(self):
+        print(self.__parc.consulter_parc())
+        s_id = input("ID de la station: ")
+        print(self.__parc.consulter_velos_reparations())
+        v_id = input("ID du vélo: ")
+        self.__parc.reaffecter_velo_repare(s_id, v_id)
+        print(f"Vélo {v_id} revenu de réparations et affecté a la station {s_id}")
 
 parc = ParcDeVelos()
 s_eiffel = Station("Tour Eiffel", "5 parc du Champ de Mars, 75007 Paris")
@@ -18,88 +90,71 @@ print(s_eiffel.afficher_info())
 print("------------------------------------------------------")
 #velo_id_demade = input("veuillez rentrer votre id, exemple V_1000 : ")
 
-#creation des variables
-velo_id_demande = "0"
-heureDebut = 0
-heureFin = 0
-station_prise = s_eiffel
-valeur_autoriser = ["1","2","3","4","5","6","7","quitter"]
-nom_station = "oui"
-adress_station = "oui"
-capacity_station = 10
-nombre_velo = 1
-parc_choisi = parc
+main = Main(parc)
 
 #mis en place du tableau de fonction a deux dimension
-tab_fonction = [[parc_choisi.louer_velo(station_prise.id,heureDebut), #1 1
-                 parc_choisi.retourner_velo(station_prise.id,heureFin,velo_id_demande)], #1 2
-
-                [parc_choisi.consulter_parc(), #2 1
-                 parc_choisi.ajouter_station(Station(nom_station,adress_station,capacity_station)), #2 2
-                 station_prise.ajouter_velo(nombre_velo),#2 3
-                 station_prise.retirer_velo(), #2 4
-                 parc_choisi.envoyer_en_reparation(velo_id_demande),#2 5
-                 parc_choisi.reaffecter_velo_repare(velo_id_demande) #2 6
-                 ]]
+tab_fonction = [
+    [
+        main.usr_louer_velo,        # 1.1
+        main.usr_retourner_velo,    # 1.2
+    ],
+    [
+        main.consulter,             # 2.1
+        main.ajout_station,         # 2.2
+        main.ajout_velo,            # 2.3
+        main.retirer_velo,          # 2.4
+        main.reparer_velo,          # 2.5
+        main.reaffecter_velo,       # 2.6
+    ]
+]
 
 #menu utilisateur
 menu_principal = ("Menu Principal : \n"
                   "1. Utilisateur - Location de vélos\n"    
                   "2. Gestionnaire - Gestion du parc\n"
-                  "Quitter")
+                  "3. Quitter")
 
-sous_menu1 = ("\t1 Louer un vélo\n"
-              "\t2 Retourner un vélo\n"
-              "\t3. Retour au menu principal\n"
-              "Quitter\n")
+sous_menus = [
+   ("\t1 Louer un vélo\n"
+    "\t2 Retourner un vélo\n"
+    "\t3. Retour au menu principal\n"),
+    ("\t1. Consulter l’état du parc\n"
+      "\t2. Ajouter une nouvelle station au parc\n"
+      "\t3. Ajouter un ou plusieurs vélos dans une station\n"
+      "\t4. Retirer un vélo d’une station\n"
+      "\t5. Envoyer un vélo en réparation\n"
+      "\t6. Réaffecter un vélo réparé à une station\n"
+      "\t7. Retour au menu principal\n"),
+]
 
-sous_menu2 = ("\t1. Consulter l’état du parc\n"
-              "\t2. Ajouter une nouvelle station au parc\n"
-              "\t3. Ajouter un ou plusieurs vélos dans une station\n"
-              "\t4. Retirer un vélo d’une station\n"
-              "\t5. Envoyer un vélo en réparation\n"
-              "\t6. Réaffecter un vélo réparé à une station\n"
-              "\t7. Retour au menu principal\n"
-              "Quitter\n")
+running = True
+cat = None
 
-
-
-while True:
-    print(menu_principal)
+while running:
     try:
-        cate = input("veuillez rentrer la categorie souhaité : ")
-        if cate != "quitter" and cate in ["1","2","3"]:
-            cate = int(cate)
-            if cate > 3 or cate <1:
-                print("il faut que le premier soit soit 1 ou bien 2")
-                continue
-            elif cate == 1 :
-                print(sous_menu1)
-                sous_cate = input("veuillez rentrer la sous catégorie souhaité : ")
-                if sous_cate not in ["1","2","quitter"]:
-                    raise ValueError
-                else :
-                    sous_cate = int(sous_cate)
-                    print(tab_fonction[cate][sous_cate])
+        if cat is None:
+            print(menu_principal)
+            cat = int(input("Veuillez rentrer la categorie souhaité : "))
 
-            elif cate ==2:
-                print(sous_menu2)
-                sous_cate = input("veuillez rentrer la sous catégorie souhaité : ")
-                if sous_cate not in ["1","2","3","4","5","6","7","quitter"]:
-                    raise ValueError
-                else :
-                    sous_cate = int(sous_cate)
-                    print(tab_fonction[cate][sous_cate])
-            else:
-                continue
-
-        elif cate not in ["1","2","quitter"]:
-            raise ValueError
-
-        else:
-            print("Vous venez de quitter")
+        if cat == 3:
+            running = False
             break
+
+        print(sous_menus[cat - 1])
+        cmd = int(input("Veuillez rentrer la commande souhaitée : "))
+
+        if (cat == 1 and cmd == 3) or (cat == 2 and cmd == 7) :
+            cat = None
+            continue
+
+        cmd_f = tab_fonction[cat - 1][cmd - 1]
+        cmd_f()
+
     except ValueError:
-        print("veuillez rentrer une valeur possible.")
+        print("Veuillez rentrer une valeur possible.")
         continue
+    except StationError as err:
+        print(f"Erreur de la station: {err}\n", file=sys.stderr)
+    except ParcError as err:
+        print(f"Erreur du parc: {err}\n", file=sys.stderr)
 
