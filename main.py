@@ -1,4 +1,7 @@
+# Python POO - TP 4
+
 import sys
+from collections.abc import Callable
 
 from ParcError import ParcError, StationError
 from ParcDeVelos import ParcDeVelos
@@ -94,7 +97,7 @@ print("------------------------------------------------------")
 main = Main(parc)
 
 #mis en place du tableau de fonction a deux dimension
-tab_fonction = [
+tab_fonction: list[list[Callable]] = [
     [
         main.usr_louer_velo,        # 1.1
         main.usr_retourner_velo,    # 1.2
@@ -129,7 +132,7 @@ sous_menus = [
 ]
 
 running = True
-cat = None
+cat: int | None = None
 
 while running:
     try:
