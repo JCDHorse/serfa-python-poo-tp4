@@ -16,7 +16,7 @@ class Main:
     def usr_louer_velo(self):
         print(self.__parc.consulter_parc())
         s_id = input("ID de la station: ").upper()
-        hd = int(input("Quelle heure est-il ? (si il es 00h mettre 24h)"))
+        hd = int(input("Quelle heure est-il ? (mettre 0 si il est 00h)"))
         ticket = self.__parc.louer_velo(s_id, hd)
         print(f"Vélo {ticket["velo"].get_id()} a été loué a {hd}h a la station {s_id}")
 
