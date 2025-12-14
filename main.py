@@ -138,6 +138,7 @@ while running:
 
 
         if cat > len(tab_fonction) + 1:
+            cat = None
             raise ValueError
 
         if cat == len(tab_fonction) + 1:
@@ -148,6 +149,7 @@ while running:
         cmd = int(input("Veuillez rentrer la commande souhaitée : "))
 
         if cmd > len(tab_fonction[cat - 1]) + 1:
+            cmd = None
             raise ValueError
 
         if cmd == len(tab_fonction[cat - 1]) + 1:
