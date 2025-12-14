@@ -1,7 +1,7 @@
 from random import randint
 
 from ParcError import StationError
-from classVelo import Velo
+from classVelo import Velo, VeloEtat
 
 
 class Station:
@@ -51,12 +51,12 @@ class Station:
 
         for velo in self.__velos:
             # Cas par défaut, sans id fourni
-            if v_id is None and velo.etat == "disponible":
+            if v_id is None and velo.etat == VeloEtat.DISPONIBLE:
                 velo_retire = velo
                 break
 
             # Cas avec id fourni
-            if v_id is not None and velo.id == v_id and velo.etat == "disponible":
+            if v_id is not None and velo.id == v_id and velo.etat == VeloEtat.DISPONIBLE:
                 velo_retire = velo
                 break
 

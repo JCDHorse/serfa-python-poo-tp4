@@ -2,7 +2,6 @@ import sys
 
 from ParcError import ParcError, StationError
 from parcvelos import ParcDeVelos
-from classVelo import Velo
 from Station import Station
 
 class Main:
@@ -18,7 +17,7 @@ class Main:
         s_id = input("ID de la station: ").upper()
         hd = int(input("Quelle heure est-il ? (mettre 0 si il est 00h)"))
         ticket = self.__parc.louer_velo(s_id, hd)
-        print(f"Vélo {ticket["velo"].get_id()} a été loué a {hd}h a la station {s_id}")
+        print(f"Vélo {ticket["velo"].id} a été loué a {hd}h a la station {s_id}")
 
     # 1.2
     def usr_retourner_velo(self):
