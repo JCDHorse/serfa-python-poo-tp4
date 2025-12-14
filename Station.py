@@ -1,4 +1,6 @@
 from random import randint
+
+from ParcError import StationError
 from classVelo import Velo
 
 
@@ -14,34 +16,35 @@ class Station:
     @classmethod
     def generate_id(cls):
         while True:
-            id = f"S{randint(3400, 4000)}X"
-            if id not in cls.__id_util:
-                cls.__id_util.append(id)
-                return id
+            _id = f"S{randint(3400, 4000)}X"
+            if _id not in cls.__id_util:
+                cls.__id_util.append(_id)
+                return _id
 
-    def ajouter_velo(self,argument):
+    # Retourne le nombre de vélos ajoutés
+    def ajouter_velo(self, argument: Velo | int) -> int:
         # Si plus de capacité de stockage alors on return
         if len(self.__velos) == self.__capacite:
-            return "station pleine : impossible d'ajouter un nouveau vélo."
+            raise StationError(f"Station {self.__id} pleine, impossible d'ajouter un vélo")
 
-        else:
-            # On ajoute un seul vélo
-            if isinstance(argument, Velo):
+        # On ajoute un seul vélo
+        if isinstance(argument, Velo):
+            if len(self.__velos) < self.__capacite:
+                self.__velos.append(argument)
+                return 1
+            raise StationError(f"Station {self.__id} pleine, impossible d'ajouter un vélo")
+
+        # On ajoute plusieurs vélos
+        if isinstance(argument,int):
+            ajout_velo=0
+            for i in range(argument):
                 if len(self.__velos) < self.__capacite:
-                    self.__velos.append(argument)
-                    return "1 vélo ajouté."
-                return "station pleine : impossible d'ajouter un nouveau vélo."
-            
-            # On ajoute plusieurs vélos
-            elif isinstance(argument,int):
-                ajout_velo=0
-                for i in range(argument):
-                    if len(self.__velos) < self.__capacite:
-                        self.__velos.append(Velo())
-                        ajout_velo+=1
-                    else:
-                        break
-                return f"{ajout_velo} vélos ont été ajoutés sur {argument}"
+                    self.__velos.append(Velo())
+                    ajout_velo += 1
+                else:
+                    break
+            return ajout_velo
+        raise StationError(f"Erreur station inconnue lors de l'ajout de vélos")
 
     def retirer_velo(self, v_id=None):
         velo_retire = None
@@ -59,18 +62,23 @@ class Station:
 
         if velo_retire:
             self.__velos.remove(velo_retire)
-            print(f"le vélo {velo_retire.id} a été retiré")
             return velo_retire
-        else:
-            print("aucun vélo correspondant n'est disponible")
-            return None
+        if v_id is None:
+            raise StationError(f"station {self.__id} est vide")
+        raise StationError(f"Velo {v_id} introuvable dans la station {self.__id}")
 
 
     def afficher_info(self):
-        return (f"Voici la station : {self.__nom}\n"
+        return (f"Voici la station : {self.__nom} (ID: {self.__id})\n"
                 f"l'adresse : {self.__emplacement}\n"
                 f"la capacité : {self.__capacite}\n"
-                f"et le nombre de vélo actuel : {len(self.__velos)}")
+                f"et le nombre de vélo actuel : {len(self.__velos)}\n")
+
+    def get_velo(self, v_id: str) -> Velo:
+        for v in self.__velos:
+            if v.id == v_id:
+                return v
+        raise StationError(f"Velo {v_id} introuvable dans la station {self.__id}")
 
     @property
     def emplacement(self):
@@ -79,7 +87,7 @@ class Station:
     @emplacement.setter
     def emplacement(self,nvl_emplacement):
         self.__emplacement = nvl_emplacement
-    
+
     @property
     def velos(self):
         output_velo = ""
