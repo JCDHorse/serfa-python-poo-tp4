@@ -136,14 +136,21 @@ while running:
             print(menu_principal)
             cat = int(input("Veuillez rentrer la categorie souhaité : "))
 
-        if cat == 3:
+
+        if cat > len(tab_fonction) + 1:
+            raise ValueError
+
+        if cat == len(tab_fonction) + 1:
             running = False
             break
 
         print(sous_menus[cat - 1])
         cmd = int(input("Veuillez rentrer la commande souhaitée : "))
 
-        if (cat == 1 and cmd == 3) or (cat == 2 and cmd == 7) :
+        if cmd > len(tab_fonction[cat - 1]) + 1:
+            raise ValueError
+
+        if cmd == len(tab_fonction[cat - 1]) + 1:
             cat = None
             continue
 

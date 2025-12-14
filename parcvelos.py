@@ -105,7 +105,7 @@ class ParcDeVelos:
 
     def consulter_station(self, s_id: str):
         infos = ""
-        s = self.__stations[s_id]
+        s = self.__station(s_id)
         infos += s.afficher_info()
         infos += s.velos
         return infos
