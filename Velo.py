@@ -1,6 +1,8 @@
 import random
 from enum import Enum
 
+# Enumération pour l'état du vélo au lieu d'un str
+# Bonus non demandé par le TP
 class VeloEtat(Enum):
     DISPONIBLE = 0
     LOUEE = 1

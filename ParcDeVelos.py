@@ -75,7 +75,7 @@ class ParcDeVelos:
     def reaffecter_velo_repare(self, s_id: str, v_id: str):
         velo = None
         for v in self.__en_reparations:
-            if v.get_id() == v_id:
+            if v.id == v_id:
                 velo = v
         if velo is None:
             raise ParcError(f"Vélo {v_id} n'est pas en réparation")
@@ -103,7 +103,7 @@ class ParcDeVelos:
     def consulter_velos_reparations(self):
         infos = "Vélos en réparation:\n"
         for v in self.__en_reparations:
-            infos += "\t- " + v.get_id() + "\n"
+            infos += "\t- " + v.id + "\n"
         return infos
 
     def consulter_station(self, s_id: str):
