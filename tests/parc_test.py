@@ -1,8 +1,8 @@
 import unittest
 
-from parcvelos import ParcDeVelos
+from ParcDeVelos import ParcDeVelos
 from Station import Station
-from classVelo import Velo
+from Velo import Velo
 from ParcError import ParcError
 
 

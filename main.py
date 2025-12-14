@@ -1,7 +1,7 @@
 import sys
 
 from ParcError import ParcError, StationError
-from parcvelos import ParcDeVelos
+from ParcDeVelos import ParcDeVelos
 from Station import Station
 
 class Main:

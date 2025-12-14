@@ -1,7 +1,7 @@
 from random import randint
 
 from ParcError import StationError
-from classVelo import Velo, VeloEtat
+from Velo import Velo, VeloEtat
 
 
 class Station:

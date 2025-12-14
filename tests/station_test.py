@@ -1,7 +1,7 @@
 import unittest
 
 from Station import Station
-from classVelo import Velo
+from Velo import Velo
 from ParcError import StationError
 
 

@@ -1,6 +1,6 @@
 import unittest
 
-from classVelo import Velo, VeloEtat
+from Velo import Velo, VeloEtat
 
 
 class VeloTest(unittest.TestCase):
