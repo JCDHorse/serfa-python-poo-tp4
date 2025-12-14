@@ -9,3 +9,5 @@
 - Retourner un vélo de réparation
 - Location de vélos
 - Retour des vélos a une station et calcul du tarif
+- **Bonus :** Gestion des erreurs via des exceptions customs
+- **Bonus :** Utilisation d'une énumération pour l'état des vélos
