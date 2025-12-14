@@ -1,4 +1,8 @@
 # Python POO - TP 4
+# Auteur·e·s
+# YL
+# YM
+# CD
 
 import sys
 from collections.abc import Callable
@@ -7,76 +11,69 @@ from ParcError import ParcError, StationError
 from ParcDeVelos import ParcDeVelos
 from Station import Station
 
-class Main:
-    def __init__(self, parc: ParcDeVelos | None = None):
-        if parc is None:
-            self.__parc = ParcDeVelos()
-        else:
-            self.__parc = parc
 
-    # 1.1
-    def usr_louer_velo(self):
-        print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ").upper()
-        hd = int(input("Quelle heure est-il ? (mettre 0 si il est 00h)"))
-        ticket = self.__parc.louer_velo(s_id, hd)
-        print(f"Vélo {ticket["velo"].id} a été loué a {hd}h a la station {s_id}")
+# 1.1
+def usr_louer_velo(_parc: ParcDeVelos):
+    s_id = input("ID de la station: ").upper()
+    hd = int(input("Quelle heure est-il ? (mettre 0 si il est 00h)"))
+    ticket = _parc.louer_velo(s_id, hd)
+    print(f"Vélo {ticket["velo"].id} a été loué a {hd}h a la station {s_id}")
 
-    # 1.2
-    def usr_retourner_velo(self):
-        print(self.__parc.consulter_parc())
-        v_id = input("ID du vélo: ").upper()
-        s_id = input("ID de la station: ").upper()
-        hf = int(input("Quelle heure est-il ? (si il es 00h mettre 24h)"))
-        tarif = self.__parc.retourner_velo(s_id, hf, v_id)
-        print(f"Vélo {v_id} a été retourné a {hf}h a la station {s_id}.")
-        print(f"Prix de la location : {tarif}€")
+# 1.2
+def usr_retourner_velo(_parc: ParcDeVelos):
+    print(_parc.consulter_parc())
+    v_id = input("ID du vélo: ").upper()
+    s_id = input("ID de la station: ").upper()
+    hf = int(input("Quelle heure est-il ? (si il es 00h mettre 24h)"))
+    tarif = _parc.retourner_velo(s_id, hf, v_id)
+    print(f"Vélo {v_id} a été retourné a {hf}h a la station {s_id}.")
+    print(f"Prix de la location : {tarif}€")
 
 
-    # 2.1
-    def consulter(self):
-        print(self.__parc.consulter_parc())
+# 2.1
+def consulter(_parc: ParcDeVelos):
+    print(_parc.consulter_parc())
 
-    # 2.2
-    def ajout_station(self):
-        nom = input("Nom de la station: ")
-        adresse = input("Adresse de la station: ")
-        self.__parc.ajouter_station(Station(nom, adresse))
+# 2.2
+def ajout_station(_parc: ParcDeVelos):
+    nom = input("Nom de la station: ")
+    adresse = input("Adresse de la station: ")
+    _parc.ajouter_station(Station(nom, adresse))
 
-    # 2.3
-    def ajout_velo(self):
-        print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ").upper()
-        c = int(input("Nombre de vélos a ajouter a la station: "))
-        self.__parc.ajouter_new_velos(s_id, c)
-        print(f"{c} vélos ajoutés a {s_id}")
+# 2.3
+def ajout_velo(_parc: ParcDeVelos):
+    print(_parc.consulter_parc())
+    s_id = input("ID de la station: ").upper()
+    c = int(input("Nombre de vélos a ajouter a la station: "))
+    _parc.ajouter_new_velos(s_id, c)
+    print(f"{c} vélos ajoutés a {s_id}")
 
-    # 2.4
-    def retirer_velo(self):
-        print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ").upper()
-        print(self.__parc.consulter_station(s_id))
-        v_id = input("ID du vélo: ").upper()
-        self.__parc.retirer_velo(s_id, v_id)
+# 2.4
+def retirer_velo(_parc: ParcDeVelos):
+    print(_parc.consulter_parc())
+    s_id = input("ID de la station: ").upper()
+    print(_parc.consulter_station(s_id))
+    v_id = input("ID du vélo: ").upper()
+    _parc.retirer_velo(s_id, v_id)
 
-    # 2.5
-    def reparer_velo(self):
-        print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ").upper()
-        print(self.__parc.consulter_station(s_id))
-        v_id = input("ID du vélo: ").upper()
-        self.__parc.envoyer_en_reparation(s_id, v_id)
+# 2.5
+def reparer_velo(_parc: ParcDeVelos):
+    print(_parc.consulter_parc())
+    s_id = input("ID de la station: ").upper()
+    print(_parc.consulter_station(s_id))
+    v_id = input("ID du vélo: ").upper()
+    _parc.envoyer_en_reparation(s_id, v_id)
 
-    # 2.6
-    def reaffecter_velo(self):
-        if not self.__parc.a_velos_reparation():
-            print("Pas de vélos actuellement en réparation")
-            return
-        s_id = input("ID de la station: ").upper()
-        print(self.__parc.consulter_velos_reparations())
-        v_id = input("ID du vélo: ").upper()
-        self.__parc.reaffecter_velo_repare(s_id, v_id)
-        print(f"Vélo {v_id} revenu de réparations et affecté a la station {s_id}")
+# 2.6
+def reaffecter_velo(_parc: ParcDeVelos):
+    if not _parc.a_velos_reparation():
+        print("Pas de vélos actuellement en réparation")
+        return
+    s_id = input("ID de la station: ").upper()
+    print(_parc.consulter_velos_reparations())
+    v_id = input("ID du vélo: ").upper()
+    _parc.reaffecter_velo_repare(s_id, v_id)
+    print(f"Vélo {v_id} revenu de réparations et affecté a la station {s_id}")
 
 parc = ParcDeVelos()
 s_eiffel = Station("Tour Eiffel", "5 parc du Champ de Mars, 75007 Paris")
@@ -94,21 +91,19 @@ print(s_eiffel.afficher_info())
 print("------------------------------------------------------")
 #velo_id_demade = input("veuillez rentrer votre id, exemple V_1000 : ")
 
-main = Main(parc)
-
 #mis en place du tableau de fonction a deux dimension
 tab_fonction: list[list[Callable]] = [
     [
-        main.usr_louer_velo,        # 1.1
-        main.usr_retourner_velo,    # 1.2
+        usr_louer_velo,        # 1.1
+        usr_retourner_velo,    # 1.2
     ],
     [
-        main.consulter,             # 2.1
-        main.ajout_station,         # 2.2
-        main.ajout_velo,            # 2.3
-        main.retirer_velo,          # 2.4
-        main.reparer_velo,          # 2.5
-        main.reaffecter_velo,       # 2.6
+        consulter,             # 2.1
+        ajout_station,         # 2.2
+        ajout_velo,            # 2.3
+        retirer_velo,          # 2.4
+        reparer_velo,          # 2.5
+        reaffecter_velo,       # 2.6
     ]
 ]
 
@@ -161,7 +156,7 @@ while running:
             continue
 
         cmd_f = tab_fonction[cat - 1][cmd - 1]
-        cmd_f()
+        cmd_f(parc)
 
     except ValueError:
         print("Veuillez rentrer une valeur possible.")
