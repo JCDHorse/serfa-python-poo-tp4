@@ -16,7 +16,7 @@ class Main:
     def usr_louer_velo(self):
         print(self.__parc.consulter_parc())
         s_id = input("ID de la station: ").upper()
-        hd = int(input("Quelle heure est-il ?"))
+        hd = int(input("Quelle heure est-il ? (si il es 00h mettre 24h)"))
         ticket = self.__parc.louer_velo(s_id, hd)
         print(f"Vélo {ticket["velo"].get_id()} a été loué a {hd}h a la station {s_id}")
 
@@ -25,7 +25,7 @@ class Main:
         print(self.__parc.consulter_parc())
         v_id = input("ID du vélo: ").upper()
         s_id = input("ID de la station: ").upper()
-        hf = int(input("Quelle heure est-il ?"))
+        hf = int(input("Quelle heure est-il ? (si il es 00h mettre 24h)"))
         tarif = self.__parc.retourner_velo(s_id, hf, v_id)
         print(f"Vélo {v_id} a été retourné a {hf}h a la station {s_id}.")
         print(f"Prix de la location : {tarif}€")
