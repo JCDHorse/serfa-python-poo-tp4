@@ -15,7 +15,7 @@ class Main:
     # 1.1
     def usr_louer_velo(self):
         print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ")
+        s_id = input("ID de la station: ").upper()
         hd = int(input("Quelle heure est-il ?"))
         ticket = self.__parc.louer_velo(s_id, hd)
         print(f"Vélo {ticket["velo"].get_id()} a été loué a {hd}h a la station {s_id}")
@@ -23,8 +23,8 @@ class Main:
     # 1.2
     def usr_retourner_velo(self):
         print(self.__parc.consulter_parc())
-        v_id = input("ID du vélo: ")
-        s_id = input("ID de la station: ")
+        v_id = input("ID du vélo: ").upper()
+        s_id = input("ID de la station: ").upper()
         hf = int(input("Quelle heure est-il ?"))
         tarif = self.__parc.retourner_velo(s_id, hf, v_id)
         print(f"Vélo {v_id} a été retourné a {hf}h a la station {s_id}.")
@@ -44,7 +44,7 @@ class Main:
     # 2.3
     def ajout_velo(self):
         print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ")
+        s_id = input("ID de la station: ").upper()
         c = int(input("Nombre de vélos a ajouter a la station: "))
         self.__parc.ajouter_new_velos(s_id, c)
         print(f"{c} vélos ajoutés a {s_id}")
@@ -52,25 +52,25 @@ class Main:
     # 2.4
     def retirer_velo(self):
         print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ")
+        s_id = input("ID de la station: ").upper()
         print(self.__parc.consulter_station(s_id))
-        v_id = input("ID du vélo: ")
+        v_id = input("ID du vélo: ").upper()
         self.__parc.retirer_velo(s_id, v_id)
 
     # 2.5
     def reparer_velo(self):
         print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ")
+        s_id = input("ID de la station: ").upper()
         print(self.__parc.consulter_station(s_id))
-        v_id = input("ID du vélo: ")
+        v_id = input("ID du vélo: ").upper()
         self.__parc.envoyer_en_reparation(s_id, v_id)
 
     # 2.6
     def reaffecter_velo(self):
         print(self.__parc.consulter_parc())
-        s_id = input("ID de la station: ")
+        s_id = input("ID de la station: ").upper()
         print(self.__parc.consulter_velos_reparations())
-        v_id = input("ID du vélo: ")
+        v_id = input("ID du vélo: ").upper()
         self.__parc.reaffecter_velo_repare(s_id, v_id)
         print(f"Vélo {v_id} revenu de réparations et affecté a la station {s_id}")
 
